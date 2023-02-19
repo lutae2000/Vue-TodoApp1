@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet" />
+    <link href="app.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <div id="app" class="app">
+        <div class="head">메모앱</div>
+        <div class="body">
+            <div class="list" v-if="mode === 'list'">
+                <ul>
+                    <li v-for="m in memos" v-on:click="open(m.id)">{{ m.content }}</li>
+                </ul>
+            </div>
+            <div class="write" v-else>
+                <textarea v-model="memo.content"></textarea>
+                <button class="save-btn" type="button" v-on:click="save()">저장</button>
+                <button class="cancel-btn" type="button" v-on:click="cancel()">취소</button>
+            </div>
+
+            <button type="button" class="add-btn" v-on:click="write()" v-if="mode === 'list'">+</button>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

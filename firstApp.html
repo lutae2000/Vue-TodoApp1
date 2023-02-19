@@ -1,0 +1,119 @@
+li<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <title>Document</title>
+    <style>
+        button {
+            background: white;
+            border: 1px solid gray;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        button.active{
+            background: blue;
+            color: white;
+            border: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-if="visible">나는 보입니다</h1>
+        <h1 v-show="visible">나는 보여</h1>
+        <ul>
+            <li v-for="n in numbers">{{n}}</li>
+        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>나이</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="p in people" v-if="p.age>40">
+                    <td>{{p.name}}</td>
+                    <td>{{p.age}}</td>
+                </tr>
+            </tbody>
+        </table>
+            <button @click="alert('버튼을 클릭했습니다.')">버튼</button>
+    </div>
+
+    <div id="app1">
+        <button @click="alert('버튼을 클릭')">버튼</button>
+        <input type="text" @keyup="capture()">
+        <hr>
+        <button @click="add()">버튼</button>
+        <ul>
+            <li v-for="n in numbers"> {{ n }}</li>
+        </ul>
+
+        <hr>
+        <input type="text" v-model="animal" @keyup.enter="capture()">
+        <ul>
+            <li v-for="a in animals">{{ a }}</li>
+        </ul>
+
+        <button v-for="p in pages" v-bind:class="{ 'active' : page === p }" v-on:click="page = p">{{ p }}</button>
+        <hr>
+        <div v-for="p in pages" v-if="page === p">
+            <p>{{p}} conttens</p>
+        </div>
+    </div>
+
+
+    <input type="text" v-model="message">
+    <script>
+        var firstApp = new Vue({
+            el: '#app',
+            data: {
+                message: '첫번째 vue.js 앱'
+                , visible: true
+                , numbers: [1,2,3,4,5,6,7]
+                , people: [
+                    {
+                    name: '이순신'
+                    , age: 30
+                    }
+                    ,{
+                    name: '신사임당'
+                    , age: 40
+                    }
+                    ,{
+                    name: '율곡'
+                    , age: 50
+                    }
+                ]
+            },
+        });
+
+        var secondApp = new Vue({
+            el: '#app1',
+            data: {
+                numbers: [1,2,3,4,5,6,7]
+                , animal: null
+                , animals: ['lion', 'tiger']
+                , page: 'page1'
+                , pages: ['page1', 'page2', 'page3', 'page4']
+            },
+            methods: {
+                add: function(){
+                    let lastNum = this.numbers[this.numbers.length - 1];
+                    lastNum += 1;
+                    this.numbers.push(lastNum);
+                },
+                capture: function() {
+                        if(this.animal)
+                        this.animals.push(this.animal);
+                }
+            },
+        })
+    </script>
+</body>
+</html>
