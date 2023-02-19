@@ -31,11 +31,21 @@ var app = new Vue({
             };
         },
         save: function () {
-            this.memos.push({
-                id: this.memos.length + 1,
-                content: this.memo.content,
-                regDate: new Date(),
-            });
+            if (this.mode === "write") {
+                this.memos.push({
+                    id: this.memos.length + 1,
+                    content: this.memo.content,
+                    regDate: new Date(),
+                });
+            } else if (this.mode === "edit") {
+                for (let i in this.memos) {
+                    if (this.memos[i].id === this.memo.id) {
+                        this.memos[i] = this.renew(this.memo);
+                        break;
+                    }
+                }
+            }
+
             this.mode = "list";
 
             localStorage.setItem("memos", JSON.stringify(this.memos));
